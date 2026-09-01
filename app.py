@@ -2,8 +2,27 @@ import streamlit as st
 import math
 import re
 
+# Page Config
+st.set_page_config(
+    page_title="Password Strength Auditor", 
+    page_icon="🔐", 
+    layout="centered",
+    initial_sidebar_state="collapsed"
+)
 
-st.set_page_config(page_title="Password Strength Auditor", page_icon="🔐", layout="centered")
+# Top header, GitHub Fork button, aur Bottom Footer hide karne ke liye CSS
+hide_all_streamlit_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    header {visibility: hidden;}
+    footer {visibility: hidden;}
+    [data-testid="stHeader"] {visibility: hidden;}
+    [data-testid="stDecoration"] {display: none;}
+    [data-testid="stStatusWidget"] {visibility: hidden;}
+    div[class^="viewerBadge"] {display: none !important;}
+    </style>
+"""
+st.markdown(hide_all_streamlit_style, unsafe_allow_html=True)
 
 st.title("🔐 Password Security Auditor")
 st.write("Enter a password below to analyze its strength, entropy, and vulnerabilities.")
@@ -12,7 +31,7 @@ st.write("Enter a password below to analyze its strength, entropy, and vulnerabi
 password = st.text_input("Enter Password", type="password", help="Type your password here to test.")
 
 if password:
-    # Get audit metrics (agar auditor.py me direct function na ho to basic calculation)
+    # Get audit metrics
     length = len(password)
     has_lower = bool(re.search(r'[a-z]', password))
     has_upper = bool(re.search(r'[A-Z]', password))
