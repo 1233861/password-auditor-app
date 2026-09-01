@@ -13,7 +13,7 @@ st.set_page_config(
 # 2. VIP Styling & Ultimate Clean Layout CSS
 vip_style = """
     <style>
-    /* Hide Default Streamlit Headers, Footers, & Floating Badges */
+    /* Hide Default Streamlit Headers, Footers, Floating Badges & GitHub Profile Icons */
     #MainMenu {visibility: hidden !important; display: none !important;}
     header {visibility: hidden !important; display: none !important;}
     footer {visibility: hidden !important; display: none !important;}
@@ -27,6 +27,16 @@ vip_style = """
     button[title*="Manage app"] {display: none !important;}
     .stAppIconButton {display: none !important;}
     .stApp > header {display: none !important;}
+    
+    /* Strict Mobile, Manage App & GitHub Profile Badge Hiding */
+    [data-testid="stAppViewBlockContainer"] ~ div {display: none !important;}
+    .stDeployButton {display: none !important;}
+    div[class*="stAppAction"] {display: none !important;}
+    div[class*="stFooter"] {display: none !important;}
+    a[href*="github.com"] {display: none !important;}
+    iframe[title*="streamlit"] {display: none !important;}
+    [data-testid="stStatusWidget"] {display: none !important;}
+    #root > div:nth-child(1) > div > div > div > div > section > div {padding-bottom: 0px !important;}
 
     /* Global Dark Modern Theme */
     .stApp {
