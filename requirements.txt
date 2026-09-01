@@ -1,0 +1,8 @@
+# No external dependencies — this project intentionally uses only
+# Python's standard library (hashlib, urllib, argparse, etc.) so it
+# runs anywhere with zero setup.
+#
+# Optional, only if you want to run the test suite with pytest instead
+# of the built-in unittest runner:
+# pytest>=7.0
+streamlit
