@@ -10,20 +10,30 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Complete CSS block for hiding top headers, GitHub buttons, and bottom viewer badges
+# Ultra-Aggressive CSS Block to hide headers, footers, toolbars & floating badges
 hide_all_streamlit_style = """
     <style>
-    #MainMenu {visibility: hidden !important;}
-    header {visibility: hidden !important;}
-    footer {visibility: hidden !important;}
-    [data-testid="stHeader"] {visibility: hidden !important; display: none !important;}
+    /* Hide Main Menu & Standard Header/Footer */
+    #MainMenu {visibility: hidden !important; display: none !important;}
+    header {visibility: hidden !important; display: none !important;}
+    footer {visibility: hidden !important; display: none !important;}
+    
+    /* Target Specific Streamlit Structural Selectors */
+    [data-testid="stHeader"] {display: none !important;}
     [data-testid="stDecoration"] {display: none !important;}
-    [data-testid="stStatusWidget"] {visibility: hidden !important; display: none !important;}
-    [data-testid="stToolbar"] {visibility: hidden !important; display: none !important;}
+    [data-testid="stStatusWidget"] {display: none !important;}
+    [data-testid="stToolbar"] {display: none !important;}
     [data-testid="stElementToolbar"] {display: none !important;}
+    
+    /* Target Floating Badges, Crown Icons, and Action Buttons */
     div[class*="viewerBadge"] {display: none !important;}
     div[class*="stActionButton"] {display: none !important;}
+    button[title*="Manage app"] {display: none !important;}
+    .stAppIconButton {display: none !important;}
+    
+    /* Remove padding created by top header */
     .stApp > header {display: none !important;}
+    .main .block-container {padding-top: 1rem !important;}
     </style>
 """
 st.markdown(hide_all_streamlit_style, unsafe_allow_html=True)
