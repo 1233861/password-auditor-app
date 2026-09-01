@@ -10,16 +10,20 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Top header, GitHub Fork button, aur Bottom Footer hide karne ke liye CSS
+# Complete CSS block for hiding top headers, GitHub buttons, and bottom viewer badges
 hide_all_streamlit_style = """
     <style>
-    #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
-    footer {visibility: hidden;}
-    [data-testid="stHeader"] {visibility: hidden;}
-    [data-testid="stDecoration"] {display: none;}
-    [data-testid="stStatusWidget"] {visibility: hidden;}
-    div[class^="viewerBadge"] {display: none !important;}
+    #MainMenu {visibility: hidden !important;}
+    header {visibility: hidden !important;}
+    footer {visibility: hidden !important;}
+    [data-testid="stHeader"] {visibility: hidden !important; display: none !important;}
+    [data-testid="stDecoration"] {display: none !important;}
+    [data-testid="stStatusWidget"] {visibility: hidden !important; display: none !important;}
+    [data-testid="stToolbar"] {visibility: hidden !important; display: none !important;}
+    [data-testid="stElementToolbar"] {display: none !important;}
+    div[class*="viewerBadge"] {display: none !important;}
+    div[class*="stActionButton"] {display: none !important;}
+    .stApp > header {display: none !important;}
     </style>
 """
 st.markdown(hide_all_streamlit_style, unsafe_allow_html=True)
