@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import math
 import re
 
@@ -10,34 +11,48 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. VIP Styling & Ultimate Clean Layout CSS
+# 2. Hard Removal via JavaScript Injection (Hides Toolbar, Manage App, GitHub Avatar & Footers)
+components.html(
+    """
+    <script>
+    function removeStreamlitElements() {
+        const selectors = [
+            '#MainMenu', 'header', 'footer',
+            '[data-testid="stHeader"]',
+            '[data-testid="stDecoration"]',
+            '[data-testid="stStatusWidget"]',
+            '[data-testid="stToolbar"]',
+            '[data-testid="stElementToolbar"]',
+            'div[class*="viewerBadge"]',
+            'div[class*="stActionButton"]',
+            'button[title*="Manage app"]',
+            '.stAppIconButton',
+            '[data-testid="stAppViewBlockContainer"] ~ div',
+            '.stDeployButton',
+            'div[class*="stAppAction"]',
+            'div[class*="stFooter"]',
+            'a[href*="github.com"]',
+            'iframe[title*="streamlit"]'
+        ];
+        
+        selectors.forEach(selector => {
+            const elements = window.parent.document.querySelectorAll(selector);
+            elements.forEach(el => el.remove());
+        });
+    }
+
+    // Run immediately and continuously to catch dynamically loaded elements
+    removeStreamlitElements();
+    setInterval(removeStreamlitElements, 500);
+    </script>
+    """,
+    height=0,
+    width=0
+)
+
+# 3. VIP Styling CSS
 vip_style = """
     <style>
-    /* Hide Default Streamlit Headers, Footers, Floating Badges & GitHub Profile Icons */
-    #MainMenu {visibility: hidden !important; display: none !important;}
-    header {visibility: hidden !important; display: none !important;}
-    footer {visibility: hidden !important; display: none !important;}
-    [data-testid="stHeader"] {display: none !important;}
-    [data-testid="stDecoration"] {display: none !important;}
-    [data-testid="stStatusWidget"] {display: none !important;}
-    [data-testid="stToolbar"] {display: none !important;}
-    [data-testid="stElementToolbar"] {display: none !important;}
-    div[class*="viewerBadge"] {display: none !important;}
-    div[class*="stActionButton"] {display: none !important;}
-    button[title*="Manage app"] {display: none !important;}
-    .stAppIconButton {display: none !important;}
-    .stApp > header {display: none !important;}
-    
-    /* Strict Mobile, Manage App & GitHub Profile Badge Hiding */
-    [data-testid="stAppViewBlockContainer"] ~ div {display: none !important;}
-    .stDeployButton {display: none !important;}
-    div[class*="stAppAction"] {display: none !important;}
-    div[class*="stFooter"] {display: none !important;}
-    a[href*="github.com"] {display: none !important;}
-    iframe[title*="streamlit"] {display: none !important;}
-    [data-testid="stStatusWidget"] {display: none !important;}
-    #root > div:nth-child(1) > div > div > div > div > section > div {padding-bottom: 0px !important;}
-
     /* Global Dark Modern Theme */
     .stApp {
         background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
@@ -161,11 +176,11 @@ vip_style = """
 """
 st.markdown(vip_style, unsafe_allow_html=True)
 
-# 3. Header UI
+# 4. Header UI
 st.markdown('<div class="hero-title">🛡️ Password Auditor</div>', unsafe_allow_html=True)
 st.markdown('<div class="hero-subtitle">Real-time entropy analysis, strength scoring & security checklist</div>', unsafe_allow_html=True)
 
-# 4. Input UI
+# 5. Input UI
 password = st.text_input("Enter Password", type="password", placeholder="Type password here...", help="Your password is evaluated locally and never saved.")
 
 if password:
@@ -227,5 +242,5 @@ if password:
     else:
         st.markdown('<div class="suggestion-item" style="color: #4ade80;">✨ Excellent! Your password follows all cybersecurity best practices.</div>', unsafe_allow_html=True)
 
-# 5. Professional Footer Text
+# 6. Professional Footer Text
 st.markdown('<div class="custom-footer">Designed & Developed by <span>Uzair Khoso</span> | Security Tool</div>', unsafe_allow_html=True)
