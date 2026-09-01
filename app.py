@@ -13,7 +13,7 @@ st.set_page_config(
 # 2. VIP Styling & Ultimate Clean Layout CSS
 vip_style = """
     <style>
-    /* Hide Streamlit Headers, Footers, & Floating Badges */
+    /* Hide Default Streamlit Headers, Footers, & Floating Badges */
     #MainMenu {visibility: hidden !important; display: none !important;}
     header {visibility: hidden !important; display: none !important;}
     footer {visibility: hidden !important; display: none !important;}
@@ -37,7 +37,7 @@ vip_style = """
     /* Container Spacing */
     .main .block-container {
         padding-top: 1.5rem !important;
-        padding-bottom: 2rem !important;
+        padding-bottom: 1rem !important;
         max-width: 720px;
     }
 
@@ -131,6 +131,22 @@ vip_style = """
         font-size: 0.9rem;
         color: #cbd5e1;
     }
+
+    /* Professional Footer */
+    .custom-footer {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: #64748b;
+        font-size: 0.85rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+    .custom-footer span {
+        color: #38bdf8;
+        font-weight: 600;
+    }
     </style>
 """
 st.markdown(vip_style, unsafe_allow_html=True)
@@ -200,3 +216,6 @@ if password:
             st.markdown(f'<div class="suggestion-item">👉 {s}</div>', unsafe_allow_html=True)
     else:
         st.markdown('<div class="suggestion-item" style="color: #4ade80;">✨ Excellent! Your password follows all cybersecurity best practices.</div>', unsafe_allow_html=True)
+
+# 5. Professional Footer Text
+st.markdown('<div class="custom-footer">Designed & Developed by <span>Uzair Khoso</span> | Security Tool</div>', unsafe_allow_html=True)
