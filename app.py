@@ -11,7 +11,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. Hard Removal via JavaScript Injection (Hides Toolbar, Manage App, GitHub Avatar & Footers)
+# 2. Hard JavaScript Removal for Mobile Iframe, Toolbar, Manage App & Footers
 components.html(
     """
     <script>
@@ -32,37 +32,52 @@ components.html(
             'div[class*="stAppAction"]',
             'div[class*="stFooter"]',
             'a[href*="github.com"]',
-            'iframe[title*="streamlit"]'
+            'iframe[title*="streamlit"]',
+            'div[class*="streamlit-footer"]',
+            'div[class*="stBottom"]',
+            'footer[class*="st-"]',
+            '.viewerBadge_container__13v3p'
         ];
         
         selectors.forEach(selector => {
             const elements = window.parent.document.querySelectorAll(selector);
-            elements.forEach(el => el.remove());
+            elements.forEach(el => {
+                el.style.setProperty('display', 'none', 'important');
+                el.style.setProperty('visibility', 'hidden', 'important');
+            });
         });
     }
 
-    // Run immediately and continuously to catch dynamically loaded elements
+    // Run continuously to remove dynamic bottom bars on mobile
     removeStreamlitElements();
-    setInterval(removeStreamlitElements, 500);
+    setInterval(removeStreamlitElements, 300);
     </script>
     """,
     height=0,
     width=0
 )
 
-# 3. VIP Styling CSS
+# 3. VIP Custom CSS Styling
 vip_style = """
     <style>
+    /* Absolute Hide Default Streamlit Headers & Footers */
+    #MainMenu, header, footer, [data-testid="stHeader"], [data-testid="stDecoration"], 
+    [data-testid="stStatusWidget"], [data-testid="stToolbar"], div[class*="stBottom"] {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0px !important;
+    }
+
     /* Global Dark Modern Theme */
     .stApp {
         background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
         color: #f8fafc;
     }
 
-    /* Container Spacing */
+    /* Layout Spacing */
     .main .block-container {
         padding-top: 1.5rem !important;
-        padding-bottom: 1rem !important;
+        padding-bottom: 1.5rem !important;
         max-width: 720px;
     }
 
@@ -242,5 +257,5 @@ if password:
     else:
         st.markdown('<div class="suggestion-item" style="color: #4ade80;">✨ Excellent! Your password follows all cybersecurity best practices.</div>', unsafe_allow_html=True)
 
-# 6. Professional Footer Text
+# 6. Professional Custom Footer Text
 st.markdown('<div class="custom-footer">Designed & Developed by <span>Uzair Khoso</span> | Security Tool</div>', unsafe_allow_html=True)
